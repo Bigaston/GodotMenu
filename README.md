@@ -3,10 +3,10 @@
 This is a Godot Addon to manage beaufifull (no) Menu Flow.
 
 ## Installation
-Use [git subrepo](https://github.com/ingydotnet/git-subrepo) to install me!  (To install Git Subrepo [watch this](https://gist.github.com/Bigaston/6d3c35c12428d9e8100eb7224a5f289c))  
+Use [git subrepo](https://github.com/ingydotnet/git-subrepo) to install me!  (To install Git Subrepo [watch this](https://github.com/Bigaston/GodotAddons/blob/main/subrepo.md))  
 
 ```sh
-git subrepo clone git@github.com:Bigaston/me.bigaston.menu.git addons/me.bigaston.menu
+git subrepo clone git@github.com:Bigaston/GodotMenu.git addons/me.bigaston.menu
 ```
 
 Then, you can use `git subrepo pull addons/me.bigaston.menu` and `git subrepo pull addons/me.bigaston.menu`
