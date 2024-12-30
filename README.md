@@ -2,6 +2,8 @@
 
 This is a Godot Addon to manage beaufifull (no) Menu Flow.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A05WS6)
+
 ## Installation
 Use [git subrepo](https://github.com/ingydotnet/git-subrepo) to install me!  (To install Git Subrepo [watch this](https://github.com/Bigaston/GodotAddons/blob/main/subrepo.md))  
 
