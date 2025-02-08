@@ -51,7 +51,8 @@ func play_exit_animation():
 	if timeline != null && timeline.has_animation("exit"):
 		timeline.play("exit")
 		await timeline.animation_finished
-		visible = false
+	
+	visible = false
 
 func on_enter():
 	pass
