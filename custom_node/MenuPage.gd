@@ -3,27 +3,27 @@
 extends Control
 class_name MenuPage
 
-signal flow_event(event_name: StringName)
+signal flow_event(page_name: StringName)
 
 @export var timeline: AnimationPlayer
-@export var default_control: Control
 
+@export_subgroup("Controls")
+@export var default_control: Control
+@export var button_flow: Dictionary[Button,StringName] = {}
+
+@export_subgroup("Advanced")
 @export var sub_manager: MenuManager
 
-@export_category("Menu Flow")
-@export var button_flow: Array[MenuButtonFlow]
+@onready var log = Logger.new("MenuPage:" + name, Color.AQUAMARINE)
 
 func _ready():
-	assert(get_parent() is MenuManager, "The parrent is not a MenuManager")
+	log.check(get_parent() is MenuManager, "The parrent is not a MenuManager")
 	
 	# Button Flow Managements
-	for button_flow in button_flow:
-		var btn = get_node(button_flow.button) as Button
+	for btn in button_flow.keys():
 		btn.pressed.connect(func():
-			flow_event.emit(button_flow.event_name)
+			flow_event.emit(button_flow[btn])
 			)
-	
-	print(name + " " + str(sub_manager))
 	
 	if sub_manager != null:
 		print("Has SubManager")

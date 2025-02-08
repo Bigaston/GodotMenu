@@ -10,13 +10,12 @@ signal final_go_backward()
 @export var default_page: MenuPage
 @export var auto_open_page = true
 
-@export_category("Menu Flow")
-@export var flow_event: Array[MenuFlowEvent]
-
 var _current_page: MenuPage
 var _available_pages: Array[MenuPage]
 var _menu_stack: Array[MenuPage]
 var _is_current_manager = false
+
+@onready var log = Logger.new("MenuPage:" + name, Color.AQUAMARINE)
 
 func _ready():
 	_available_pages.clear()
@@ -28,8 +27,7 @@ func _ready():
 			child.flow_event.connect(_on_flow_event.bind(child))
 			
 	if _available_pages.size() == 0:
-		#Logger.error("No MenuPages under the MenuManager", "MenuManager")
-		assert(false, "No MenuPages under the MenuManager")
+		log.error("No MenuPages under the MenuManager")
 		return
 	
 	if default_page != null:
@@ -39,8 +37,7 @@ func _ready():
 		if auto_open_page:
 			await change_page(_available_pages[0])
 	else:
-		#Logger.error("Can't setup a _current_page", "MenuManager")
-		assert(false, "Can't setup a _current_page")
+		log.error("Can't setup a _current_page")
 		
 func _process(_delta):
 	if Input.is_action_just_pressed("menu_back") && _is_current_manager:
@@ -68,15 +65,6 @@ func change_page(page: MenuPage, stack: bool = true):
 func add_page_to_stack(page: MenuPage):
 	_menu_stack.push_front(page)
 
-func change_page_flow(page_name: NodePath):
-	var selected_page = get_node(page_name)
-	
-	if selected_page == null:
-		#Logger.error("Page " + str(page_name) + " not found", "MenuManager")
-		pass
-	else:
-		change_page(selected_page)
-
 func back():
 	if _menu_stack.size() < 2:
 		_is_current_manager = false
@@ -89,12 +77,15 @@ func back():
 	
 	change_page(_menu_stack[0], false)
 
-func _on_flow_event(event_name: StringName, page: MenuPage):
-	for event in flow_event:
-		if event.name == event_name:
-			change_page(get_node(event.destination))
-			break
-			
+func _on_flow_event(page_name: StringName, page: MenuPage):
+	for child in get_children():
+		if child is MenuPage:
+			if child.name == page_name:
+				change_page(child)
+				return
+				
+	log.warn("Can't find page for " + page_name)
+	
 func close():
 	get_parent().queue_free()
 	
